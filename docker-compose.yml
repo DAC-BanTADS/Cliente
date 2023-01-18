@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:5.6
+    restart: on-failure
+    container_name: mysql
+    cap_add:
+      - SYS_NICE
+    environment:
+      MYSQL_DATABASE: bantads-cliente
+      MYSQL_USER: owner
+      MYSQL_PASSWORD: owner
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - cliente-network
+    ports:
+      - "3326:3306"
+
+  cliente:
+    build: .
+    image: bantads_cliente
+    restart: on-failure
+    container_name: bantads_cliente_container
+    command: docker run -p 8080:8080 bantads_cliente
+    volumes:
+      - .:/app
+      - static_data:/app/static
+    networks:
+      - cliente-network
+    ports:
+      - "8082:8080"
+    depends_on:
+      - mysql
+
+volumes:
+  static_data:
+
+networks:
+  cliente-network:
+    external: false
