@@ -30,6 +30,9 @@ public class ClienteService {
     public Optional<ClienteModel> findById(UUID id) {
         return clienteRepository.findById(id);
     }
+    public Optional<ClienteModel> findByEmail(String email) {
+        return clienteRepository.findByEmail(email);
+    }
 
     @Transactional
     public void delete(ClienteModel clienteModel) {
