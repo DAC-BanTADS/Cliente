@@ -31,6 +31,7 @@ services:
       - static_data:/app/static
     networks:
       - cliente-network
+      - rabbitmq
     ports:
       - "8082:8080"
     depends_on:
@@ -43,3 +44,5 @@ volumes:
 networks:
   cliente-network:
     external: false
+  rabbitmq:
+    external: true

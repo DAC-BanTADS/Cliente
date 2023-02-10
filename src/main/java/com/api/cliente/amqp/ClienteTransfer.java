@@ -6,7 +6,6 @@ import java.io.Serializable;
 public class ClienteTransfer implements Serializable {
     ClienteDto clienteDto;
     String action;
-    String error;
 
     public ClienteTransfer() {
     }
@@ -16,28 +15,19 @@ public class ClienteTransfer implements Serializable {
         this.action = action;
     }
 
-    public ClienteDto getCliente() {
-        return clienteDto;
+    public ClienteDto getClienteDto() {
+        return this.clienteDto;
     }
 
-    public void setCliente(ClienteDto clienteDto) {
+    public void setClienteDto(ClienteDto clienteDto) {
         this.clienteDto = clienteDto;
     }
 
     public String getAction() {
-        return action;
+        return this.action;
     }
 
     public void setAction(String action) {
         this.action = action;
     }
-
-    public String getError() {
-        return error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
-    }
-
 }

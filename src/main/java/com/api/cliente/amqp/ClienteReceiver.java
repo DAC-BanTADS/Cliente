@@ -2,6 +2,7 @@ package com.api.cliente.amqp;
 
 import com.api.cliente.controllers.ClienteController;
 import com.api.cliente.dtos.ClienteDto;
+import com.api.cliente.models.ClienteModel;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.Payload;
+
+import java.util.Objects;
 
 @RabbitListener(queues = "cliente")
 public class ClienteReceiver {
@@ -22,19 +25,19 @@ public class ClienteReceiver {
     @RabbitHandler
     public ClienteTransfer receive(@Payload ClienteTransfer clienteTransfer) {
         if (clienteTransfer.getAction().equals("save-cliente")) {
-            ResponseEntity<Object> response = clienteController.saveCliente(clienteTransfer.getCliente());
-
-            if (response.getStatusCode().equals(HttpStatus.CREATED)) {
-                ClienteDto clienteDto = (ClienteDto) response.getBody();
-                clienteTransfer.setCliente(clienteDto);
-                clienteTransfer.setAction("success-cliente");
-
+            if (Objects.isNull(clienteTransfer.getClienteDto())) {
+                clienteTransfer.setAction("failed-cliente");
                 return clienteTransfer;
             }
 
-            clienteTransfer.setError("Erro interno ao criar o cliente");
-            clienteTransfer.setAction("failed-cliente");
+            ResponseEntity<Object> response = clienteController.saveCliente(clienteTransfer.getClienteDto());
 
+            if (response.getStatusCode().equals(HttpStatus.CREATED)) {
+                clienteTransfer.setAction("success-cliente");
+                return clienteTransfer;
+            }
+
+            clienteTransfer.setAction("failed-cliente");
             return clienteTransfer;
         }
 
