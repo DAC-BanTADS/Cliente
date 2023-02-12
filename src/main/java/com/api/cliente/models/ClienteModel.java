@@ -23,10 +23,24 @@ public class ClienteModel implements Serializable {
     private String email;
     @Column(nullable = false)
     private double salario;
-
-    /*
-     * GETTERS E SETTERS
-     * */
+    @Column(nullable = false, unique = true)
+    private String telefone;
+    @Column()
+    private String rua;
+    @Column()
+    private String logradouro;
+    @Column()
+    private int numero;
+    @Column()
+    private String complemento;
+    @Column(nullable = false)
+    private String cep;
+    @Column()
+    private String cidade;
+    @Column()
+    private String estado;
+    @Column(nullable = false, unique = true)
+    private UUID idConta;
 
     public UUID getId() {
         return id;
@@ -67,4 +81,77 @@ public class ClienteModel implements Serializable {
     public void setSalario(double salario) {
         this.salario = salario;
     }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getRua() {
+        return rua;
+    }
+
+    public void setRua(String rua) {
+        this.rua = rua;
+    }
+
+    public String getLogradouro() {
+        return logradouro;
+    }
+
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public UUID getIdConta() {
+        return idConta;
+    }
+
+    public void setIdConta(UUID idConta) {
+        this.idConta = idConta;
+    }
 }
+

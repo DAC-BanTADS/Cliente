@@ -1,8 +1,6 @@
 package com.api.cliente.amqp;
 
 import com.api.cliente.controllers.ClienteController;
-import com.api.cliente.dtos.ClienteDto;
-import com.api.cliente.models.ClienteModel;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

@@ -1,24 +1,21 @@
 version: '3'
 
 services:
-  mysql_cliente:
-    image: mysql:5.6
-    restart: on-failure
-    container_name: mysql_cliente
-    cap_add:
-      - SYS_NICE
+  postgres:
+    container_name: postgres_cliente
+    image: postgres
     environment:
-      MYSQL_DATABASE: bantads-cliente
-      MYSQL_USER: owner
-      MYSQL_PASSWORD: owner
-      MYSQL_ROOT_PASSWORD: root
+      POSTGRES_DB: bantads-cliente
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /data/postgres
     volumes:
-      - db:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
     networks:
       - cliente-network
-    ports:
-      - "3326:3306"
+    restart: always
 
   cliente:
     build: .
@@ -35,10 +32,10 @@ services:
     ports:
       - "8082:8080"
     depends_on:
-      - mysql_cliente
+      - postgres
 
 volumes:
-  db:
+  postgres:
   static_data:
 
 networks:
