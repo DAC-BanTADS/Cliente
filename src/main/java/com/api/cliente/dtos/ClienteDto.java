@@ -26,7 +26,6 @@ public class ClienteDto {
     private String logradouro;
     private int numero;
     private String complemento;
-    @NotBlank
     private String cep;
     private String cidade;
     private String estado;

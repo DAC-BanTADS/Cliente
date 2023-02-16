@@ -33,7 +33,7 @@ public class ClienteModel implements Serializable {
     private int numero;
     @Column()
     private String complemento;
-    @Column(nullable = false)
+    @Column()
     private String cep;
     @Column()
     private String cidade;

@@ -6,6 +6,7 @@ import java.io.Serializable;
 public class ClienteTransfer implements Serializable {
     ClienteDto clienteDto;
     String action;
+    String message;
 
     public ClienteTransfer() {
     }
@@ -29,5 +30,13 @@ public class ClienteTransfer implements Serializable {
 
     public void setAction(String action) {
         this.action = action;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

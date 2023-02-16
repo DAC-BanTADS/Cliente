@@ -1,6 +1,5 @@
 package com.api.cliente.amqp;
 
-import com.api.cliente.controllers.ClienteController;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -18,17 +17,18 @@ public class ClienteReceiver {
     @Autowired
     private ClienteProducer clienteProducer;
     @Autowired
-    private ClienteController clienteController;
+    private ClienteHelper clienteHelper;
 
     @RabbitHandler
     public ClienteTransfer receive(@Payload ClienteTransfer clienteTransfer) {
         if (clienteTransfer.getAction().equals("save-cliente")) {
             if (Objects.isNull(clienteTransfer.getClienteDto())) {
                 clienteTransfer.setAction("failed-cliente");
+                clienteTransfer.setMessage(("Nenhum dado de Cliente foi passado."));
                 return clienteTransfer;
             }
 
-            ResponseEntity<Object> response = clienteController.saveCliente(clienteTransfer.getClienteDto());
+            ResponseEntity<Object> response = clienteHelper.saveCliente(clienteTransfer.getClienteDto());
 
             if (response.getStatusCode().equals(HttpStatus.CREATED)) {
                 clienteTransfer.setAction("success-cliente");
@@ -36,9 +36,12 @@ public class ClienteReceiver {
             }
 
             clienteTransfer.setAction("failed-cliente");
+            clienteTransfer.setMessage(Objects.requireNonNull(response.getBody()).toString());
             return clienteTransfer;
         }
 
-        return null;
+        clienteTransfer.setAction("failed-cliente");
+        clienteTransfer.setMessage("Ação informada não existe.");
+        return clienteTransfer;
     }
 }
