@@ -46,4 +46,13 @@ public class ClienteController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(clienteModelOptional.get());
     }
+
+    @GetMapping("/cpf/{cpf}")
+    public ResponseEntity<Object> getClienteByCpf(@PathVariable(value = "cpf") String cpf){
+        Optional<ClienteModel> clienteModelOptional = clienteService.findByCpf(cpf);
+        if (!clienteModelOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado.");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(clienteModelOptional.get());
+    }
 }

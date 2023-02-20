@@ -34,6 +34,8 @@ public class ClienteService {
         return clienteRepository.findByEmail(email);
     }
 
+    public Optional<ClienteModel> findByCpf(String cpf) { return clienteRepository.findByCpf(cpf); }
+
     @Transactional
     public void delete(ClienteModel clienteModel) {
         clienteRepository.delete(clienteModel);
@@ -46,8 +48,6 @@ public class ClienteService {
     public boolean existsByEmail(String email) {
         return clienteRepository.existsByEmail(email);
     }
-
-    public boolean existsByIdConta(UUID idConta) { return clienteRepository.existsByIdConta(idConta); }
 
     public boolean existsByTelefone(String telefone) { return clienteRepository.existsByTelefone(telefone); }
 }

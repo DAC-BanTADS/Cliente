@@ -6,8 +6,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.br.CPF;
 
-import java.util.UUID;
-
 public class ClienteDto {
     @NotBlank
     @Size(max = 11)
@@ -29,8 +27,6 @@ public class ClienteDto {
     private String cep;
     private String cidade;
     private String estado;
-    @NotNull
-    private UUID idConta;
 
     public String getCpf() {
         return cpf;
@@ -126,13 +122,5 @@ public class ClienteDto {
 
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-    public UUID getIdConta() {
-        return idConta;
-    }
-
-    public void setIdConta(UUID idConta) {
-        this.idConta = idConta;
     }
 }

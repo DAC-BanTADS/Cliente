@@ -27,9 +27,6 @@ public class ClienteHelper {
         if(clienteService.existsByEmail(clienteDto.getEmail())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflito: O e-mail já está sendo utilizado!");
         }
-        if(clienteService.existsByIdConta(clienteDto.getIdConta())){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflito: A conta informada já está sendo utilizada!");
-        }
         if(clienteService.existsByTelefone(clienteDto.getTelefone())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflito: O telefone já está sendo utilizada!");
         }
@@ -40,6 +37,16 @@ public class ClienteHelper {
     }
 
     public ResponseEntity<Object> updateCliente(UUID id, @Valid ClienteDto clienteDto){
+        if(clienteService.existsByCpf(clienteDto.getCpf())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflito: O CPF já está sendo utilizado!");
+        }
+        if(clienteService.existsByEmail(clienteDto.getEmail())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflito: O e-mail já está sendo utilizado!");
+        }
+        if(clienteService.existsByTelefone(clienteDto.getTelefone())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflito: O telefone já está sendo utilizada!");
+        }
+
         Optional<ClienteModel> clienteModelOptional = clienteService.findById(id);
         if (!clienteModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado.");

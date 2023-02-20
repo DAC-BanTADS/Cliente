@@ -39,8 +39,6 @@ public class ClienteModel implements Serializable {
     private String cidade;
     @Column()
     private String estado;
-    @Column(nullable = false, unique = true)
-    private UUID idConta;
 
     public UUID getId() {
         return id;
@@ -144,14 +142,6 @@ public class ClienteModel implements Serializable {
 
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-    public UUID getIdConta() {
-        return idConta;
-    }
-
-    public void setIdConta(UUID idConta) {
-        this.idConta = idConta;
     }
 }
 
