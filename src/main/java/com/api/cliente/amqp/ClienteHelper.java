@@ -20,7 +20,7 @@ public class ClienteHelper {
         this.clienteService = clienteService;
     }
 
-    public ResponseEntity<Object> saveCliente(@Valid ClienteDto clienteDto){
+    public ResponseEntity<String> saveCliente(@Valid ClienteDto clienteDto){
         if(clienteService.existsByCpf(clienteDto.getCpf())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflito: O CPF já está sendo utilizado!");
         }
@@ -33,10 +33,10 @@ public class ClienteHelper {
 
         var clienteModel = new ClienteModel();
         BeanUtils.copyProperties(clienteDto, clienteModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.save(clienteModel));
+        return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.save(clienteModel).getId().toString());
     }
 
-    public ResponseEntity<Object> updateCliente(UUID id, @Valid ClienteDto clienteDto){
+    public ResponseEntity<String> updateCliente(UUID id, @Valid ClienteDto clienteDto){
         if(clienteService.existsByCpf(clienteDto.getCpf())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflito: O CPF já está sendo utilizado!");
         }
@@ -54,15 +54,22 @@ public class ClienteHelper {
         var clienteModel = new ClienteModel();
         BeanUtils.copyProperties(clienteDto, clienteModel);
         clienteModel.setId(clienteModelOptional.get().getId());
-        return ResponseEntity.status(HttpStatus.OK).body(clienteService.save(clienteModel));
+
+        clienteService.save(clienteModel);
+        return ResponseEntity.status(HttpStatus.OK).body(clienteModelOptional.get().getEmail());
     }
 
-    public ResponseEntity<Object> deleteCliente(UUID id){
+    public ResponseEntity<ClienteDto> deleteCliente(UUID id){
         Optional<ClienteModel> clienteModelOptional = clienteService.findById(id);
         if (!clienteModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ClienteDto());
         }
+
+        ClienteDto clienteDto = new ClienteDto();
+
+        BeanUtils.copyProperties(clienteModelOptional.get(), clienteDto);
+
         clienteService.delete(clienteModelOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("Cliente deletado com sucesso.");
+        return ResponseEntity.status(HttpStatus.OK).body(clienteDto);
     }
 }
