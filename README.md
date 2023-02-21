@@ -8,7 +8,7 @@ Se você usa Mac, o mesmo.
 
 Após ter a sua variável JAVA_HOME configurada, você precisa buildar o projeto. Pode utilizar o seguinte comando, na raiz do projeto: `./mvnw clean package -DskipTests`.
 
-Se tiver buildado corretamente, agora você precisa buildar a imagem docker do projeto. Primeiro, instale o docker e o docker-compose no seu computador. Após isso, utilize o comando: `docker build -t bantads_gerente .`
+Se tiver buildado corretamente, agora você precisa buildar a imagem docker do projeto. Primeiro, instale o docker e o docker-compose no seu computador. Após isso, utilize o comando: `docker build -t bantads_cliente .`
 
 Após buildar a imagem, é necessário executá-la, criando o container. Nesse sentido, rode o comando de build e depois o comando para erguer os containeres: `docker-compose build && docker-compose up -d`.
 
