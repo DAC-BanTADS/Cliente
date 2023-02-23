@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,8 +24,8 @@ public class ClienteService {
         return clienteRepository.save(clienteModel);
     }
 
-    public Page<ClienteModel> findAll(Pageable pageable) {
-        return clienteRepository.findAll(pageable);
+    public List<ClienteModel> findAll() {
+        return clienteRepository.findAll();
     }
 
     public Optional<ClienteModel> findById(UUID id) {
